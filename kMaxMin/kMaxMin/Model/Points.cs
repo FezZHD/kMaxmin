@@ -1,6 +1,6 @@
-﻿namespace kMeans.Model
+﻿namespace kMaxMin.Model
 {
-    internal class Points
+    public class Points
     {
         internal int XPoint { get; set; }
         internal int YPoint { get; set; }

@@ -7,7 +7,7 @@
         xmlns:kMeans="clr-namespace:kMeans"
         xmlns:viewModel="clr-namespace:kMeans.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" MinHeight="600" MinWidth="800">
     <Window.DataContext>
         <viewModel:WindowViewModel />
     </Window.DataContext>
@@ -19,11 +19,11 @@
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Image Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding ImageSource}"></Image>
+        <Image Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight="600"  MinWidth="570" Source="{Binding ImageSource}"></Image>
         <TextBlock Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,10" Text="Enter points count"></TextBlock>
-        <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5, 20"></TextBox>
+        <TextBox Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding PointsCount, Mode=OneWayToSource}" VerticalAlignment="Top" Margin="5, 50"></TextBox>
         <Button Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" IsEnabled="{Binding IsEnableToPress, Converter= {StaticResource EnumConverter}}" Content="Calculate" Command="{Binding ExecuteTask}"></Button>
-        <ProgressBar Grid.Column="1" HorizontalAlignment="Stretch" IsIndeterminate="{Binding IsWorking}" VerticalAlignment="Bottom" Margin="0, 20"></ProgressBar>
+        <ProgressBar Grid.Column="1" Height="20" HorizontalAlignment="Stretch" IsIndeterminate="{Binding IsWorking}" VerticalAlignment="Bottom" Margin="0, 20"></ProgressBar>
     </Grid>
 </Window>
 

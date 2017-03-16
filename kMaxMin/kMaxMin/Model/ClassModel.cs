@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Media;
 
-namespace kMeans.Model
+
+namespace kMaxMin.Model
 {
-    internal class ClassModel
+    public class ClassModel
     {
         internal List<Points> ClassPoints { get; set; }
         internal Color ClassColor { get; set; }

@@ -8,7 +8,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using kMaxMin.Model;
-using kMeans.Model;
 
 namespace kMeans.ViewModel
 {
@@ -18,39 +17,41 @@ namespace kMeans.ViewModel
         public WindowViewModel()
         {
             IsEnableToPress = true;
-            ExecuteTask = new Command((async () =>
+            ExecuteTask = new Command(async () =>
             {
-                if (!ConvertCheckingWrite())
+                if (!int.TryParse(PointsCount, out pointsCountNum))
                 { 
                     return;
                 }
                 IsEnableToPress = false;
                 IsWorking = true;
-                Tuple<List<ClassModel>, List<Points>> result = null;
-                var model = new PointsModel(pointsCountNum, classCountNum);
-                await Task.Run(() => 
+                ClassModel result = null;
+                var model = new PointsModel(pointsCountNum);
+                await Task.Run(() =>
                 {
-                    result = model.ExecuteFirstDrawing();
+                    result = model.GeneratePoints();
                 });
-                await Task.Delay(200);
-                ImageSource = await Task.FromResult(Draw(result.Item1));
+                //ImageSource = await Task.FromResult(Draw(result.Item1));
                 Tuple<List<ClassModel>, bool> redrawResult = null;
+                List<Points> allPointses = new List<Points>(result.ClassPoints);
+                var classList = new List<ClassModel>();
+                classList.Add(result);
                 while (true)
                 {
                     await Task.Run(() =>
                     {
-                        redrawResult = model.RedrawPoints(result.Item2, result.Item1);
+                        redrawResult = model.GenerateClasses(classList, allPointses);
                     });
+                    
                     if (!redrawResult.Item2)
                     {
                         break;
-                    }
-                    ImageSource = await Task.FromResult(Draw(redrawResult.Item1));
-                    await Task.Delay(200);
+                    } 
                 }
+                ImageSource = await Task.FromResult(Draw(redrawResult.Item1));
                 IsWorking = false;
                 IsEnableToPress = true;
-            }));
+            });
         }
 
 
