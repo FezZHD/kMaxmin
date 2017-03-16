@@ -4,9 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kMaxMin"
+        xmlns:kMeans="clr-namespace:kMeans"
+        xmlns:viewModel="clr-namespace:kMeans.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+    <Window.DataContext>
+        <viewModel:WindowViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <kMeans:EnumConverter x:Key="EnumConverter"></kMeans:EnumConverter>
+    </Window.Resources>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Image Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding ImageSource}"></Image>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,10" Text="Enter points count"></TextBlock>
+        <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5, 20"></TextBox>
+        <Button Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" IsEnabled="{Binding IsEnableToPress, Converter= {StaticResource EnumConverter}}" Content="Calculate" Command="{Binding ExecuteTask}"></Button>
+        <ProgressBar Grid.Column="1" HorizontalAlignment="Stretch" IsIndeterminate="{Binding IsWorking}" VerticalAlignment="Bottom" Margin="0, 20"></ProgressBar>
     </Grid>
 </Window>
+
